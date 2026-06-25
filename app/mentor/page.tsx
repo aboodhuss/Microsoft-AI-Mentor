@@ -1,10 +1,13 @@
 "use client";
 
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Bell, CalendarDays, Users, ShieldCheck, BarChart3, Star, ClipboardList, Clock } from 'lucide-react';
 import { Card } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
+import { useUserProfile } from '../../lib/useUserProfile';
 
 const overview = [
   { title: 'Volunteer Hours', value: '18.2', icon: Clock, tone: 'brand' },
@@ -25,6 +28,54 @@ const students = [
 ];
 
 export default function MentorDashboard() {
+  const { profile, loading } = useUserProfile();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!profile) {
+      router.push('/login');
+      return;
+    }
+
+    if (profile.role !== 'mentor') {
+      if (profile.role === 'pending') {
+        router.push('/pending');
+      } else if (profile.role === 'teacher') {
+        router.push('/teacher');
+      } else if (profile.role === 'learner') {
+        router.push('/student');
+      } else if (profile.role === 'parent') {
+        router.push('/parent');
+      } else if (profile.role === 'admin') {
+        router.push('/admin');
+      }
+    }
+  }, [loading, profile, router]);
+
+  if (loading || !profile) {
+    return null;
+  }
+
+  if (!profile.mentorCertified) {
+    return (
+      <main className="min-h-screen bg-slate-950 px-6 py-16 text-slate-100 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/10 bg-slate-900/80 p-10 shadow-soft">
+          <p className="text-sm uppercase tracking-[0.3em] text-brand-200">Mentor access locked</p>
+          <h1 className="mt-4 text-4xl font-semibold text-white">Complete Responsible AI Foundations to begin mentoring.</h1>
+          <p className="mt-5 text-lg leading-8 text-slate-400">
+            Mentor accounts must finish the Responsible AI Foundations course before they can access mentoring tools, session booking, or volunteer hours.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/responsible-ai" className="inline-flex items-center justify-center rounded-full bg-brand-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-brand-400">
+              Open Responsible AI Foundations
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-16 text-slate-100 sm:px-8 lg:px-10">
       <div className="mx-auto max-w-7xl space-y-8">

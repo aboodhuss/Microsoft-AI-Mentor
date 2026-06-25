@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signInWithGoogleAuth, signInWithEmailAuth } from '../../lib/auth';
@@ -44,7 +46,7 @@ export default function LoginPage() {
     <main className="min-h-screen bg-slate-950 px-6 py-16 text-slate-100 sm:px-8">
       <section className="mx-auto max-w-md rounded-3xl border border-white/10 bg-slate-900/80 p-8 shadow-soft">
         <h1 className="text-3xl font-semibold">Sign in</h1>
-        <p className="mt-3 text-sm text-slate-400">Sign in with Google or email to continue to Microsoft AI Mentor.</p>
+        <p className="mt-3 text-sm text-slate-400">Sign in with your school email to continue.</p>
 
         <button
           type="button"

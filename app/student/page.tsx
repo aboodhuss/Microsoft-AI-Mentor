@@ -1,10 +1,13 @@
 "use client";
 
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Sparkles, BookOpen, Clock, Trophy, ShieldCheck, MessageCircle } from 'lucide-react';
 import { Card } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
+import { useUserProfile } from '../../lib/useUserProfile';
 
 const lessons = [
   { title: 'AI safety basics', progress: 95 },
@@ -18,6 +21,35 @@ const sessions = [
 ];
 
 export default function StudentDashboard() {
+  const { profile, loading } = useUserProfile();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!profile) {
+      router.push('/login');
+      return;
+    }
+
+    if (profile.role !== 'learner') {
+      if (profile.role === 'pending') {
+        router.push('/pending');
+      } else if (profile.role === 'mentor') {
+        router.push('/mentor');
+      } else if (profile.role === 'teacher') {
+        router.push('/teacher');
+      } else if (profile.role === 'parent') {
+        router.push('/parent');
+      } else if (profile.role === 'admin') {
+        router.push('/admin');
+      }
+    }
+  }, [loading, profile, router]);
+
+  if (loading || !profile) {
+    return null;
+  }
+
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-16 text-slate-100 sm:px-8 lg:px-10">
       <div className="mx-auto max-w-7xl space-y-8">

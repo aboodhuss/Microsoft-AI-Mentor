@@ -1,10 +1,14 @@
-export type UserRole = 'mentor' | 'student' | 'teacher' | 'parent' | 'admin';
+export type UserRole = 'mentor' | 'learner' | 'teacher' | 'parent' | 'admin' | 'pending';
 
 export interface UserProfile {
   uid: string;
   email: string | null;
   displayName: string | null;
   role: UserRole;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  approved: boolean;
+  mentorCertified: boolean;
+  schoolId: string | null;
+  assignedTeacher: string | null;
+  createdAt: any;
+  updatedAt: any;
 }

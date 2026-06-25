@@ -1,5 +1,10 @@
+"use client";
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { ShieldCheck, Sparkles, Eye, Lock, Globe, Users, BookOpen, Shield } from 'lucide-react';
+import { completeResponsibleAIAssessment } from '../../lib/auth';
+import { useUserProfile } from '../../lib/useUserProfile';
 
 const principles = [
   { name: 'Fairness', description: 'Balanced learning paths for every student, regardless of experience or background.', icon: Globe },
@@ -13,6 +18,33 @@ const principles = [
 ];
 
 export default function ResponsibleAIPage() {
+  const { profile } = useUserProfile();
+  const [certified, setCertified] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (profile) {
+      setCertified(profile.mentorCertified);
+    }
+  }, [profile]);
+
+  async function handleComplete() {
+    if (!profile) return;
+    setLoading(true);
+    setMessage(null);
+
+    try {
+      await completeResponsibleAIAssessment(profile.uid);
+      setCertified(true);
+      setMessage('You are now certified to begin mentoring.');
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : 'Unable to complete assessment.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-16 text-slate-100 sm:px-8 lg:px-10">
       <div className="mx-auto max-w-6xl">
@@ -32,6 +64,22 @@ export default function ResponsibleAIPage() {
               Explore Student experience
             </Link>
           </div>
+          {profile?.role === 'mentor' && !certified ? (
+            <div className="mt-8 rounded-3xl border border-brand-500/20 bg-slate-950/90 p-6">
+              <p className="text-sm uppercase tracking-[0.2em] text-brand-200">Mentor certification</p>
+              <h2 className="mt-3 text-2xl font-semibold text-white">Complete Responsible AI Foundations</h2>
+              <p className="mt-3 text-sm leading-6 text-slate-400">Mentor access is locked until you pass the foundation course and assessment.</p>
+              {message ? <p className="mt-4 text-sm text-brand-300">{message}</p> : null}
+              <button
+                type="button"
+                onClick={handleComplete}
+                disabled={loading}
+                className="mt-6 rounded-2xl bg-brand-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-brand-400 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {loading ? 'Completing...' : 'Complete assessment'}
+              </button>
+            </div>
+          ) : null}
         </div>
 
         <section className="mt-12 grid gap-6 lg:grid-cols-2">
