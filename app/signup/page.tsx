@@ -4,8 +4,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { registerTeacher, registerStudent } from '../../lib/auth';
 
+const FAIRFIELD_HIGH_CODE = 'FAIRFIELD-HIGH-SCHOOL-2026';
+const FAIRFIELD_PRIMARY_CODE = 'FAIRFIELD-PRIMARY-SCHOOL-2026';
+
+type SignupRole = 'teacher' | 'student' | 'mentor';
+
 export default function SignupPage() {
-  const [isTeacherFlow, setIsTeacherFlow] = useState(true);
+  const [selectedRole, setSelectedRole] = useState<SignupRole>('teacher');
   const [fullName, setFullName] = useState('');
   const [schoolName, setSchoolName] = useState('');
   const [email, setEmail] = useState('');
@@ -28,14 +33,26 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      const redirectPath = isTeacherFlow
-        ? await registerTeacher(fullName, schoolName, email, password)
-        : await registerStudent(fullName, email, password, inviteCode);
+      const redirectPath =
+        selectedRole === 'teacher'
+          ? await registerTeacher(fullName, schoolName, email, password)
+          : await registerStudent(fullName, email, password, inviteCode);
       router.push(redirectPath as any);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Signup failed.');
     } finally {
       setLoading(false);
+    }
+  }
+
+  function selectRole(role: SignupRole) {
+    setSelectedRole(role);
+    if (role === 'mentor') {
+      setInviteCode(FAIRFIELD_HIGH_CODE);
+    } else if (role === 'student') {
+      setInviteCode(FAIRFIELD_PRIMARY_CODE);
+    } else {
+      setInviteCode('');
     }
   }
 
@@ -45,66 +62,103 @@ export default function SignupPage() {
         <div className="flex gap-2 mb-8 rounded-3xl bg-slate-950/80 p-2">
           <button
             type="button"
-            onClick={() => setIsTeacherFlow(true)}
+            onClick={() => selectRole('teacher')}
             className={`flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
-              isTeacherFlow ? 'bg-brand-500 text-slate-950' : 'bg-slate-900 text-slate-300'
+              selectedRole === 'teacher' ? 'bg-brand-500 text-slate-950' : 'bg-slate-900 text-slate-300'
             }`}
           >
             Teacher
           </button>
           <button
             type="button"
-            onClick={() => setIsTeacherFlow(false)}
+            onClick={() => selectRole('student')}
             className={`flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
-              !isTeacherFlow ? 'bg-brand-500 text-slate-950' : 'bg-slate-900 text-slate-300'
+              selectedRole === 'student' ? 'bg-brand-500 text-slate-950' : 'bg-slate-900 text-slate-300'
             }`}
           >
             Student
+          </button>
+          <button
+            type="button"
+            onClick={() => selectRole('mentor')}
+            className={`flex-1 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
+              selectedRole === 'mentor' ? 'bg-brand-500 text-slate-950' : 'bg-slate-900 text-slate-300'
+            }`}
+          >
+            Mentor
           </button>
         </div>
 
         <div className="mb-6 space-y-3 rounded-3xl border border-white/10 bg-slate-950/80 p-4 text-sm text-slate-300">
           <p className="font-semibold text-slate-100">Test accounts</p>
-          <div className="flex flex-col gap-2 sm:flex-row">
+          <div className="grid gap-3 sm:grid-cols-2">
             <button
               type="button"
               onClick={() => {
-                setIsTeacherFlow(true);
-                setFullName('Test Teacher');
+                selectRole('teacher');
+                setFullName('Fairfield HS Teacher');
                 setSchoolName('Fairfield High School');
-                setEmail('teacher@example.com');
+                setEmail('highschool.teacher@example.com');
                 setPassword('Test1234!');
                 setConfirmPassword('Test1234!');
               }}
-              className="w-full rounded-2xl bg-brand-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-brand-400"
+              className="rounded-2xl bg-brand-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-brand-400"
             >
-              Prefill teacher account
+              Prefill High School Teacher
             </button>
             <button
               type="button"
               onClick={() => {
-                setIsTeacherFlow(false);
-                setFullName('Primary Student');
-                setInviteCode('FAIRFIELD-HIGH-SCHOOL-2026');
-                setEmail('student@example.com');
+                selectRole('teacher');
+                setFullName('Fairfield Primary Teacher');
+                setSchoolName('Fairfield Primary School');
+                setEmail('primary.teacher@example.com');
                 setPassword('Test1234!');
                 setConfirmPassword('Test1234!');
               }}
-              className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:border-white/20"
+              className="rounded-2xl bg-brand-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-brand-400"
             >
-              Prefill student account
+              Prefill Primary School Teacher
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                selectRole('student');
+                setFullName('Primary Student');
+                setEmail('primary.student@example.com');
+                setPassword('Test1234!');
+                setConfirmPassword('Test1234!');
+              }}
+              className="rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:border-white/20"
+            >
+              Prefill Student
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                selectRole('mentor');
+                setFullName('High School Mentor');
+                setEmail('highschool.mentor@example.com');
+                setPassword('Test1234!');
+                setConfirmPassword('Test1234!');
+              }}
+              className="rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:border-white/20"
+            >
+              Prefill Mentor
             </button>
           </div>
-          <p className="text-slate-400">
-            High school students are mentors and primary school students are learners. Use the invite code <span className="font-semibold text-slate-100">FAIRFIELD-HIGH-SCHOOL-2026</span> for student signup.
-          </p>
+          <div className="space-y-1 text-slate-400">
+            <p>Mentors sign up for <span className="font-semibold text-slate-100">Fairfield High School</span>.</p>
+            <p>Students sign up for <span className="font-semibold text-slate-100">Fairfield Primary School</span>.</p>
+            <p>Teachers can register for either school, depending on their classroom.</p>
+          </div>
         </div>
 
         <h1 className="text-3xl font-semibold">Create account</h1>
         <p className="mt-3 text-sm text-slate-400">
-          {isTeacherFlow
-            ? 'Teachers register first to create a school workspace and invite learners.'
-            : 'Students sign up with a school invite code and wait for teacher approval.'}
+          {selectedRole === 'teacher' && 'Teachers register first to create a school workspace and invite learners.'}
+          {selectedRole === 'student' && 'Students sign up with a primary school invite code and wait for approval.'}
+          {selectedRole === 'mentor' && 'Mentors sign up for Fairfield High School and wait for teacher approval.'}
         </p>
 
         <form onSubmit={handleSignup} className="mt-8 space-y-4">
@@ -119,7 +173,7 @@ export default function SignupPage() {
             />
           </label>
 
-          {isTeacherFlow ? (
+          {selectedRole === 'teacher' ? (
             <label className="block text-sm font-medium text-slate-200">
               School name
               <input
@@ -127,6 +181,7 @@ export default function SignupPage() {
                 value={schoolName}
                 onChange={(event) => setSchoolName(event.target.value)}
                 required
+                placeholder="Example: Fairfield High School or Fairfield Primary School"
                 className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none ring-brand-500/10 focus:border-brand-400 focus:ring-2"
               />
             </label>
@@ -138,6 +193,7 @@ export default function SignupPage() {
                 value={inviteCode}
                 onChange={(event) => setInviteCode(event.target.value)}
                 required
+                readOnly={selectedRole === 'mentor'}
                 className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none ring-brand-500/10 focus:border-brand-400 focus:ring-2"
               />
             </label>
@@ -183,7 +239,7 @@ export default function SignupPage() {
             disabled={loading}
             className="w-full rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {isTeacherFlow ? 'Register as Teacher' : 'Register as Student'}
+            {selectedRole === 'teacher' ? 'Register as Teacher' : selectedRole === 'mentor' ? 'Apply as Mentor' : 'Register as Student'}
           </button>
         </form>
 
