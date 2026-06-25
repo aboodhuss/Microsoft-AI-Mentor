@@ -128,30 +128,65 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid gap-6 md:grid-cols-3">
-            {roles.map((role) => {
-              const Icon = role.icon;
-              return (
-                <motion.div
-                  key={role.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="group"
-                >
-                  <Link href={role.href}>
-                    <div className="rounded-3xl border-2 border-white/10 bg-slate-900/80 p-8 transition hover:border-brand-500/50 hover:bg-slate-900 cursor-pointer">
-                      <div className="text-5xl mb-4">{role.emoji}</div>
-                      <h3 className="text-2xl font-bold text-white group-hover:text-brand-400">{role.title}</h3>
-                      <p className="mt-3 text-slate-300">{role.description}</p>
-                      <div className="mt-6 inline-flex items-center text-brand-400 font-semibold group-hover:gap-2 transition-all">
-                        Get started
-                        <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              );
-            })}
+            {/* Student Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="group"
+            >
+              <Link href="/student">
+                <div className="rounded-3xl border-2 border-white/10 bg-slate-900/80 p-8 transition hover:border-brand-500/50 hover:bg-slate-900 cursor-pointer">
+                  <div className="text-5xl mb-4">📚</div>
+                  <h3 className="text-2xl font-bold text-white group-hover:text-brand-400">Are you a student?</h3>
+                  <p className="mt-3 text-slate-300">Learn about AI, get matched with a cool mentor, and grow your skills!</p>
+                  <div className="mt-6 inline-flex items-center text-brand-400 font-semibold group-hover:gap-2 transition-all">
+                    Get started
+                    <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Mentor Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="group"
+            >
+              <Link href="/mentor">
+                <div className="rounded-3xl border-2 border-white/10 bg-slate-900/80 p-8 transition hover:border-brand-500/50 hover:bg-slate-900 cursor-pointer">
+                  <div className="text-5xl mb-4">🌟</div>
+                  <h3 className="text-2xl font-bold text-white group-hover:text-brand-400">Are you a mentor?</h3>
+                  <p className="mt-3 text-slate-300">Help younger students understand AI and make a real difference!</p>
+                  <div className="mt-6 inline-flex items-center text-brand-400 font-semibold group-hover:gap-2 transition-all">
+                    Get started
+                    <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Teacher Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="group"
+            >
+              <Link href="/teacher">
+                <div className="rounded-3xl border-2 border-white/10 bg-slate-900/80 p-8 transition hover:border-brand-500/50 hover:bg-slate-900 cursor-pointer">
+                  <div className="text-5xl mb-4">👨‍🏫</div>
+                  <h3 className="text-2xl font-bold text-white group-hover:text-brand-400">Are you a teacher?</h3>
+                  <p className="mt-3 text-slate-300">Monitor mentors, track student progress, and keep everyone safe.</p>
+                  <div className="mt-6 inline-flex items-center text-brand-400 font-semibold group-hover:gap-2 transition-all">
+                    Get started
+                    <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </section>
