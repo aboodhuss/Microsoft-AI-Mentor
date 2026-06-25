@@ -14,12 +14,12 @@ type RoleCard = {
   emoji: string;
 };
 
-const roles: RoleCard[] = [
+const roles = [
   {
     title: 'Are you a student?',
     description: 'Learn about AI, get matched with a cool mentor, and grow your skills!',
     icon: BookOpen,
-    href: '/student',
+    href: '/student' as const,
     color: 'brand',
     emoji: '📚',
   },
@@ -27,7 +27,7 @@ const roles: RoleCard[] = [
     title: 'Are you a mentor?',
     description: 'Help younger students understand AI and make a real difference!',
     icon: Heart,
-    href: '/mentor',
+    href: '/mentor' as const,
     color: 'accent',
     emoji: '🌟',
   },
@@ -35,11 +35,11 @@ const roles: RoleCard[] = [
     title: 'Are you a teacher?',
     description: 'Monitor mentors, track student progress, and keep everyone safe.',
     icon: Users,
-    href: '/teacher',
+    href: '/teacher' as const,
     color: 'success',
     emoji: '👨‍🏫',
   },
-];
+] as const;
 
 const benefits = [
   {
