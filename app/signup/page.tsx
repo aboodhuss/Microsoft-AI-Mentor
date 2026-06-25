@@ -63,6 +63,43 @@ export default function SignupPage() {
           </button>
         </div>
 
+        <div className="mb-6 space-y-3 rounded-3xl border border-white/10 bg-slate-950/80 p-4 text-sm text-slate-300">
+          <p className="font-semibold text-slate-100">Test accounts</p>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => {
+                setIsTeacherFlow(true);
+                setFullName('Test Teacher');
+                setSchoolName('Fairfield High School');
+                setEmail('teacher@example.com');
+                setPassword('Test1234!');
+                setConfirmPassword('Test1234!');
+              }}
+              className="w-full rounded-2xl bg-brand-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-brand-400"
+            >
+              Prefill teacher account
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setIsTeacherFlow(false);
+                setFullName('Primary Student');
+                setInviteCode('FAIRFIELD-HIGH-SCHOOL-2026');
+                setEmail('student@example.com');
+                setPassword('Test1234!');
+                setConfirmPassword('Test1234!');
+              }}
+              className="w-full rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:border-white/20"
+            >
+              Prefill student account
+            </button>
+          </div>
+          <p className="text-slate-400">
+            High school students are mentors and primary school students are learners. Use the invite code <span className="font-semibold text-slate-100">FAIRFIELD-HIGH-SCHOOL-2026</span> for student signup.
+          </p>
+        </div>
+
         <h1 className="text-3xl font-semibold">Create account</h1>
         <p className="mt-3 text-sm text-slate-400">
           {isTeacherFlow
