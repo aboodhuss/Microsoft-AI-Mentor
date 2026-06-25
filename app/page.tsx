@@ -2,9 +2,19 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import type { LucideIcon } from 'lucide-react';
 import { BookOpen, Users, Trophy, Zap, Heart, Brain } from 'lucide-react';
 
-const roles = [
+type RoleCard = {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  href: '/student' | '/mentor' | '/teacher';
+  color: string;
+  emoji: string;
+};
+
+const roles: RoleCard[] = [
   {
     title: 'Are you a student?',
     description: 'Learn about AI, get matched with a cool mentor, and grow your skills!',
