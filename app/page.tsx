@@ -19,7 +19,7 @@ const roles: RoleCard[] = [
     title: 'Are you a student?',
     description: 'Learn about AI, get matched with a mentor and grow your skills.',
     icon: BookOpen,
-    href: '/signup?role=student',
+    href: '/student',
     color: 'brand',
     emoji: '📚',
   },
@@ -27,7 +27,7 @@ const roles: RoleCard[] = [
     title: 'Are you a mentor?',
     description: 'Help younger students understand AI and make a real difference!',
     icon: Heart,
-    href: '/signup?role=mentor',
+    href: '/mentor',
     color: 'accent',
     emoji: '🌟',
   },
@@ -35,7 +35,7 @@ const roles: RoleCard[] = [
     title: 'Are you a teacher?',
     description: 'Monitor mentors, track student progress, and keep everyone safe.',
     icon: Users,
-    href: '/signup?role=teacher',
+    href: '/teacher',
     color: 'success',
     emoji: '👨‍🏫',
   },
@@ -62,8 +62,8 @@ const benefits = [
 const steps = [
   {
     number: '1️⃣',
-    title: 'Create an account',
-    description: 'Select your role as a student, mentor, or teacher.',
+    title: 'Explore a portal',
+    description: 'Open the student, mentor, or teacher portal to test the experience.',
   },
   {
     number: '2️⃣',
@@ -102,10 +102,10 @@ export default function HomePage() {
           </div>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/signup"
+              href="/student"
               className="inline-flex items-center justify-center rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-slate-950 transition hover:bg-brand-400 shadow-lg"
             >
-              Get started for free
+              Explore the student portal
             </Link>
             <Link
               href="/responsible-ai"
@@ -263,12 +263,12 @@ export default function HomePage() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mt-12 text-center"
           >
-            <p className="text-slate-400 mb-6">Ready to start learning?</p>
+            <p className="text-slate-400 mb-6">Ready to preview the experience?</p>
             <Link
-              href="/signup"
+              href="/mentor"
               className="inline-flex items-center justify-center rounded-full bg-brand-500 px-8 py-4 text-lg font-semibold text-slate-950 transition hover:bg-brand-400 shadow-lg"
             >
-              Join now
+              Explore mentor portal
             </Link>
           </motion.div>
         </div>

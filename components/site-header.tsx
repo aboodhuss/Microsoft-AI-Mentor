@@ -47,12 +47,6 @@ export default function SiteHeader() {
           >
             Sign in
           </Link>
-          <Link
-            href="/signup"
-            className="rounded-full bg-brand-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-brand-400"
-          >
-            Sign up
-          </Link>
         </div>
       </div>
     </header>

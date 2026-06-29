@@ -94,9 +94,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="mt-6 text-sm text-slate-400">
-          New to the platform? <a href="/signup" className="font-semibold text-brand-300 underline">Create an account</a>.
-        </p>
+        <p className="mt-6 text-sm text-slate-400">Public account creation is temporarily disabled during testing.</p>
       </section>
     </main>
   );
