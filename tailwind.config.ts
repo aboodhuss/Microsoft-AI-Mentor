@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import typography from '@tailwindcss/typography';
 
 const config: Config = {
   content: [
@@ -9,27 +10,27 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          50: '#eef7ff',
-          100: '#d8eaff',
-          200: '#b1d3ff',
-          300: '#80b5ff',
-          400: '#4f8eff',
-          500: '#2567f2',
-          600: '#1c51d5',
-          700: '#1b4aa9',
-          800: '#183d85',
-          900: '#162f67'
+          50: '#e7f3ff',
+          100: '#cfe3ff',
+          200: '#9ec7ff',
+          300: '#6ea9ff',
+          400: '#4590f1',
+          500: '#0078d4',
+          600: '#0066c0',
+          700: '#0052a3',
+          800: '#004080',
+          900: '#03305f'
         }
       },
       boxShadow: {
-        soft: '0 24px 80px rgba(20, 54, 120, 0.12)'
+        soft: '0 24px 80px rgba(0, 0, 0, 0.16)'
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif']
+        sans: ['Segoe UI', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
       }
     }
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [typography],
 };
 
 export default config;

@@ -4,9 +4,10 @@
 
 :root {
   color-scheme: dark;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background-color: #020617;
+  font-family: 'Segoe UI', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #040b16;
   color: #f8fafc;
+  color: #ffffff;
 }
 
 html {
@@ -16,16 +17,22 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  background: radial-gradient(circle at top, rgba(59, 130, 246, 0.12), transparent 28%),
-    radial-gradient(circle at 30% 40%, rgba(79, 70, 229, 0.08), transparent 22%),
-    #020617;
+  background: radial-gradient(circle at top, rgba(0, 120, 212, 0.18), transparent 26%),
+    radial-gradient(circle at 24% 36%, rgba(0, 120, 212, 0.08), transparent 22%),
+    #040b16;
+  text-rendering: optimizeLegibility;
 }
 
 * {
   box-sizing: border-box;
 }
 
+button,
+a {
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
 ::selection {
-  background: rgba(59, 130, 246, 0.35);
+  background: rgba(0, 120, 212, 0.32);
   color: #ffffff;
 }

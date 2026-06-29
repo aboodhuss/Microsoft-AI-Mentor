@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { registerTeacher, registerStudent } from '../../lib/auth';
 
 const FAIRFIELD_HIGH_CODE = 'FAIRFIELD-HIGH-SCHOOL-2026';
@@ -10,7 +10,13 @@ const FAIRFIELD_PRIMARY_CODE = 'FAIRFIELD-PRIMARY-SCHOOL-2026';
 type SignupRole = 'teacher' | 'student' | 'mentor';
 
 export default function SignupPage() {
-  const [selectedRole, setSelectedRole] = useState<SignupRole>('teacher');
+  const searchParams = useSearchParams();
+  const initialRole = searchParams.get('role');
+  const [selectedRole, setSelectedRole] = useState<SignupRole>(
+    initialRole === 'mentor' || initialRole === 'student' || initialRole === 'teacher'
+      ? (initialRole as SignupRole)
+      : 'teacher'
+  );
   const [fullName, setFullName] = useState('');
   const [schoolName, setSchoolName] = useState('');
   const [email, setEmail] = useState('');
