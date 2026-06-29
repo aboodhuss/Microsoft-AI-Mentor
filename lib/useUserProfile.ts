@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import type { UserProfile } from './types';
 
-const isLocalDev = process.env.NODE_ENV === 'development';
+const useDemoProfiles = process.env.NEXT_PUBLIC_ENABLE_REAL_AUTH !== 'true';
 
-function getLocalDevProfile(pathname: string): UserProfile {
+function getDemoProfile(pathname: string): UserProfile {
   const baseProfile = {
     uid: 'local-dev-user',
     email: 'local.dev@example.com',
@@ -46,8 +46,8 @@ export function useUserProfile() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (isLocalDev) {
-      setProfile(getLocalDevProfile(pathname));
+    if (useDemoProfiles) {
+      setProfile(getDemoProfile(pathname));
       setLoading(false);
       return;
     }
@@ -109,7 +109,7 @@ export function useUserProfile() {
 }
 
 export async function signOutUser() {
-  if (isLocalDev) {
+  if (useDemoProfiles) {
     return;
   }
 
